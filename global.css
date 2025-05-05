@@ -1,0 +1,9 @@
+* {
+    scroll-behavior: smooth;
+}
+
+.shadow-box{
+   
+        box-shadow: 0 6px 8px 0px rgba(26, 102, 224, 0.737), 0 2px 4px -1px rgba(21, 102, 234, 0.783);
+   
+}

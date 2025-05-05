@@ -1,0 +1,2 @@
+1. Ekstrak file shopping.zip lalu foldernya pindahkan ke directory htdoc
+2. Jalan kan localhost/shopping ( sesuai nama file mu ) 
