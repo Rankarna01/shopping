@@ -39,9 +39,7 @@ $result = $conn->query($query);
                         <td class="py-2 px-4"><?= $row['email']; ?></td>
                         <td class="py-2 px-4"><?= $row['alamat']; ?></td>
                         <td class="py-2 px-4">
-                            <a href="histori_pembelian.php?email=<?= urlencode($row['email']); ?>" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
-                                Lihat Histori Pembelian
-                            </a>
+                            
                         </td>
                     </tr>
                     <?php endwhile; ?>

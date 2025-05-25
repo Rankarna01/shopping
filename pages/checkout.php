@@ -55,7 +55,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['check
 // Bayar dan ubah status menjadi paid
 if (isset($_GET['action']) && $_GET['action'] === 'pay') {
     $conn->query("UPDATE checkouts SET status = 'paid' WHERE status = 'unpaid'");
-    header("Location: payment.php"); // Arahkan ke halaman payment.php setelah bayar
+    header("Location: payment_posts.php"); // Arahkan ke halaman payment.php setelah bayar
     exit;
 }
 
@@ -85,67 +85,68 @@ if ($result->num_rows > 0) {
 </head>
 
 <body class="bg-gray-100 text-gray-800">
-    <section class="container mx-auto px-4 py-8">
-        <h1 class="text-2xl font-bold mb-6">Keranjang Belanja</h1>
+<section class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6 text-gray-800">Keranjang Belanja</h1>
 
-        <?php if (!empty($cart_items)): ?>
-            <!-- Tambahkan scroll pada layar kecil -->
-            <div class="overflow-x-auto bg-white rounded-lg shadow-md">
-                <table class="min-w-full table-auto">
-                    <thead>
-                        <tr class="bg-gray-100">
-                            <th class="py-2 px-4 border-b text-left">Gambar Produk</th>
-                            <th class="py-2 px-4 border-b text-left">Nama Produk</th>
-                            <th class="py-2 px-4 border-b text-left">Harga</th>
-                            <th class="py-2 px-4 border-b text-left">Jumlah</th>
-                            <th class="py-2 px-4 border-b text-left">Status</th>
-                            <th class="py-2 px-4 border-b text-left">Aksi</th>
+    <?php if (!empty($cart_items)): ?>
+        <!-- Scrollable table -->
+        <div class="overflow-x-auto bg-white rounded-lg shadow-lg border border-gray-200">
+            <table class="min-w-full table-auto">
+                <thead>
+                    <tr class="bg-green-500 text-white">
+                        <th class="py-3 px-4 text-left">Gambar Produk</th>
+                        <th class="py-3 px-4 text-left">Nama Produk</th>
+                        <th class="py-3 px-4 text-left">Harga</th>
+                        <th class="py-3 px-4 text-left">Jumlah</th>
+                        <th class="py-3 px-4 text-left">Status</th>
+                        <th class="py-3 px-4 text-left">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($cart_items as $item): ?>
+                        <tr class="border-t">
+                            <td class="py-3 px-4">
+                                <?php if ($item['image']): ?>
+                                    <img src="../uploads/<?= $item['image']; ?>" alt="<?= $item['name']; ?>"
+                                        class="w-16 h-16 object-cover rounded-md shadow-sm">
+                                <?php else: ?>
+                                    <img src="../uploads/default.png" alt="No Image"
+                                        class="w-16 h-16 object-cover rounded-md shadow-sm">
+                                <?php endif; ?>
+                            </td>
+                            <td class="py-3 px-4"><?= $item['name']; ?></td>
+                            <td class="py-3 px-4">Rp <?= number_format($item['price']); ?></td>
+                            <td class="py-3 px-4"><?= $item['quantity']; ?></td>
+                            <td class="py-3 px-4"><?= ucfirst($item['status']); ?></td>
+                            <td class="py-3 px-4">
+                                <a href="?action=delete&checkout_id=<?= $item['checkout_id']; ?>"
+                                    class="text-red-500 hover:text-red-700 font-semibold transition-colors duration-300">Hapus</a>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($cart_items as $item): ?>
-                            <tr>
-                                <td class="py-2 px-4 border-b">
-                                    <?php if ($item['image']): ?>
-                                        <img src="../uploads/<?= $item['image']; ?>" alt="<?= $item['name']; ?>"
-                                            class="w-16 h-16 object-cover rounded">
-                                    <?php else: ?>
-                                        <img src="../uploads/default.png" alt="No Image"
-                                            class="w-16 h-16 object-cover rounded">
-                                    <?php endif; ?>
-                                </td>
-                                <td class="py-2 px-4 border-b"><?= $item['name']; ?></td>
-                                <td class="py-2 px-4 border-b">Rp <?= number_format($item['price']); ?></td>
-                                <td class="py-2 px-4 border-b"><?= $item['quantity']; ?></td>
-                                <td class="py-2 px-4 border-b"><?= ucfirst($item['status']); ?></td>
-                                <td class="py-2 px-4 border-b">
-                                    <a href="?action=delete&checkout_id=<?= $item['checkout_id']; ?>"
-                                        class="text-red-500 hover:underline">Hapus</a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
 
-            <!-- Tombol responsif -->
-            <div class="flex flex-col md:flex-row md:space-x-3 mt-4">
-                <form action="?action=pay" method="GET"
-                    onsubmit="window.location.href='payment.php'; return false;"
-                    class="w-full mb-2 md:mb-0 md:w-auto">
-                    <button type="submit"
-                        class="w-full bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Bayar</button>
-                </form>
+        <!-- Tombol responsif -->
+        <div class="flex flex-col md:flex-row md:space-x-4 mt-6">
+            <form action="?action=pay" method="GET"
+                onsubmit="window.location.href='payment.php'; return false;"
+                class="w-full mb-4 md:mb-0 md:w-auto">
+                <button type="submit"
+                    class="w-full bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 transition duration-300">Bayar</button>
+            </form>
 
-                <a href="../pages/Shopping.php" class="w-full md:w-auto">
-                    <button type="button"
-                        class="w-full bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Kembali</button>
-                </a>
-            </div>
-        <?php else: ?>
-            <p class="text-gray-600">Keranjang Anda kosong.</p>
-        <?php endif; ?>
-    </section>
+            <a href="../pages/Shopping.php" class="w-full md:w-auto">
+                <button type="button"
+                    class="w-full bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 transition duration-300">Kembali</button>
+            </a>
+        </div>
+    <?php else: ?>
+        <p class="text-gray-600">Keranjang Anda kosong.</p>
+    <?php endif; ?>
+</section>
+
 </body>
 
 </html>

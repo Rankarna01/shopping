@@ -19,36 +19,37 @@ $notification = $result->fetch_assoc()['total'];
 
 <body class="bg-v-100">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-    <nav class="bg-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <!-- Logo -->
-                <a href="#" class="flex items-center space-x-2">
-                    <img src="../images/logo.png" alt="Logo" class="h-10">
-                    <span class="text-lg font-semibold text-gray-900">TOKO ONLINE</span>
+    <nav class="bg-green-600 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-2">
+                <img src="../images/logo-nav.png" alt="Logo" class="h-10">
+                <span class="text-lg font-semibold text-white">DAPOER BUNASYA</span>
+            </a>
+            
+            <!-- Menu -->
+            <div class="hidden md:flex space-x-6">
+                <a href="#" class="text-white hover:text-blue-200 font-bold">Home</a>
+                <a href="#product" class="text-white hover:text-blue-200 font-bold">Product</a>
+                <a href="../auth/login.php" class="text-white hover:text-blue-200 font-bold">Logout</a>
+                <a href="../pages/checkout.php" class="relative flex items-center">
+                    <i class="fas fa-shopping-cart text-white text-xl"></i>
+                    <?php if ($notification > 0): ?>
+                        <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold text-white bg-red-500 rounded-full">
+                            <?= $notification ?>
+                        </span>
+                    <?php endif; ?>
                 </a>
-                
-                <!-- Menu -->
-                <div class="hidden md:flex space-x-6">
-                    <a href="#" class="text-gray-700 hover:text-blue-900 font-bold">Home</a>
-                    <a href="#product" class="text-gray-700 hover:text-blue-900 font-bold">Product</a>
-                    <a href="../auth/login.php" class="text-blue-900 hover:text-blue-800 font-bold">Logout</a>
-                    <a href="../pages/checkout.php" class="relative flex items-center">
-                        <i class="fas fa-shopping-cart text-xl"></i>
-                        <?php if ($notification > 0): ?>
-                            <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold text-white bg-red-500 rounded-full">
-                                <?= $notification ?>
-                            </span>
-                        <?php endif; ?>
-                    </a>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <button class="md:hidden focus:outline-none" @click="open = !open">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
             </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden focus:outline-none" @click="open = !open">
+                <i class="fas fa-bars text-white text-xl"></i>
+            </button>
         </div>
-    </nav>
+    </div>
+</nav>
+
 </body>
 </html>
